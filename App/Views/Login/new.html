@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Zaloguj się{% endblock %}
+
+{% block body %}
+
+<form action="/login/create" method="post">
+    <div class="icon-adult">Email</div>
+    <input type="email"  name="email" placeholder="@ email.." autofocus value="{{email}}" />
+
+   <div class ="icon-key">Hasło</div> 
+    <input type="password" name="password" placeholder="hasło.." />
+
+    <input type="submit" value="Zaloguj">
+</form>
+
+{% endblock %}
+
+                    
+                       
+                
+
