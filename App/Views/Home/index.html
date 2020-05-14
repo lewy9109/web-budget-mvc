@@ -4,6 +4,13 @@
 
 {% block body %}
 
+{% if is_logged_in %}
+
+<a href="/logout">Wyloguj</a>
+{%else%}
+
 zarejestruj sie lub zaloguj sie  i tu sa linki do logowania i rejestracji
+
+{% endif %}
 
 {% endblock %}

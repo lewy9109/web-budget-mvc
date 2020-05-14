@@ -71,6 +71,9 @@ class User extends \Core\Model
     if($this->login == ''){
         $this->errors[] = "Podaj login";
     }
+    if(static::loginExists($this->login)){
+      $this->errors[] = "login jest zajęty";
+    }
 
     //email address
     if(filter_var($this->email, FILTER_VALIDATE_EMAIL) == false){
@@ -114,6 +117,8 @@ class User extends \Core\Model
   /**
    * Authenticate a user by email and password.
    *
+   * funkcja do logowania przez email
+   * 
    * @param string $email email address
    * @param string $password password
    *
@@ -131,7 +136,7 @@ class User extends \Core\Model
 
       return false;
   }
-  /*
+  
   public static function loginExists($login)
   {
     return static::findByLogin($login) != false;
@@ -151,7 +156,7 @@ class User extends \Core\Model
 
       return $stmt->fetch();
   }
-
+//funkcja do logowanie sprawdzajaca czy login jest w bazie  
   public static function checkLogin($login, $password)
   {
     $user = static::findByLogin($login);
@@ -164,5 +169,5 @@ class User extends \Core\Model
   return false;
 
   }
-  */
+  
 }
