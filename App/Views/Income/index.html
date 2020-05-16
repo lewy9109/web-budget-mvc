@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Moje finanse{% endblock %}
+
+{% block body %}
+
+   {% block header %}
+        {{ parent() }}
+    {% endblock %}
+<main>
+ 
+    {% block nav %}
+        {{ parent() }}
+    {% endblock %}
+
+    <section class="main_panel">
+        <div class="manage_panel">
+            <div class="heading"><i class="icon-plus"></i>Przychód</div>
+
+            <form method="post" action="/income/create">
+                 Kwota: 
+                <input type="text"  name="amount" placeholder="kwota..">
+                
+                Data:
+                <input type="date" name="date" placeholder = "yyyy-mm-dd">
+  
+                Wybierz kategorie: 
+                <select name="category">
+                    <option value = "Wynagrodzenie" name = "Wynagrodzenie">Wynagrodzenie</option>
+                    <option value = "Odsetki" name = "Odsetki">Odsetki</option>
+                    <option value = "Allegro" name = "Allegro">Allegro</option>
+                    <option value = "Inne" name = "Inne">Inne</option>
+                </select>
+
+                Komentarz: 
+                <input type="text" name="comment" placeholder="komentarz..">
+                
+                <div style="display: flex; margin-top: 30px;">
+                    <input type="submit" value="Dodaj" style="width: 100%;">
+                </div>
+                
+            </form>
+        </div>
+    </section> 
+    
+</main>
+    
+{% block footer %}
+    {{ parent() }}
+{% endblock %}
+
+
+{% endblock %}

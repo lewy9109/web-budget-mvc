@@ -1,14 +1,76 @@
 <!DOCTYPE html>
-<html>
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}Moje Finanse{% endblock %}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+    <link rel="stylesheet" href="/css/normalize.css" />
+    <link rel="stylesheet" href="/css/fontello.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <!--Fonts-->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
 </head>
 <body>
-    {% block body %}
-    {% endblock %}
  
-    {% block footer %}
+    {% block body %}
+        {% block header %}
+            <header>
+                <nav class="navbar_top">
+                  <a href="/item" class="navbar-brand"><i class="icon-wallet d-inline-block align-bottom"></i>Moje Finanse</a>
+                </nav> 
+            </header>
+        {% endblock %}
+
+        {% block main %}
+            <main>
+                {% block nav %}
+                <nav class="navbar  navbar-expand-md">
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#mainmenu" aria-controls="mainmenu" aria-expanded="false" aria-label="Przełącznik nawigacji">
+                        <span class="icon-th-list"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="mainmenu">
+                        <ul class= "navbar-nav">
+                            <li class="nav-item">
+                                <a href="/item" class="nav-link"><i class="icon-home"></i>Twoje finanse</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/income" class="nav-link"><i class="icon-plus"></i>Przychód</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/expense" class="nav-link"><i class="icon-minus"></i>Wydatek</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link"><i class="icon-chart-pie-alt"></i>Przegladaj bilans</a>
+
+                            <li class="nav-item">
+                                <a href="#" class="nav-link"><i class="icon-user"></i>Ustawienia</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/logout" class="nav-link"><i class="icon-login"></i>Wyloguj</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav> 
+                {% endblock %}
+
+
+            </main>
+            
+        {% endblock %}
+           
+        {% block footer %}
+        <footer>
+            <p>Copyight &copy; 2020 - Krystian Lewandowski</p> 
+        </footer>
+        {% endblock %}
     {% endblock %}
+   
+
 </body>
 </html>

@@ -1,9 +1,24 @@
 {% extends "base.html" %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Moje Finance{% endblock %}
 
 {% block body %}
+   
+    {% block header %}
+        {{ parent() }}
+    {% endblock %}
 
-<h1>Items</h1>
+    <main>
+        {% block nav %}
+            {{ parent() }}
+        {% endblock %}
+        co tu jest
+        
+    </main>
+
+   
+{% block footer %}
+    {{ parent() }}
+{% endblock %}
 
 {% endblock %}

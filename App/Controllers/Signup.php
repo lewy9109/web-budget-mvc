@@ -32,10 +32,9 @@ class Signup extends \Core\Controller
     public function createAction()
     {
        $user = new User($_POST);
-        if($user->save())
+        if($user->save() && $user->addDefalutIncomeCategories() && $user->addDefalutExpenseCategories() && $user->addDefalutPaymentMethodsCategories())
         {
-            //header('Location: http://'.$_SERVER['HTTP_HOST'].'/signup/success', true, 303);
-            $this->redirect('/signup/success');
+            $this->redirect('/success');
             exit;
         }else{
             View::renderTemplate('Signup/new.html', ['user'=>$user]);
@@ -47,3 +46,5 @@ class Signup extends \Core\Controller
         View::renderTemplate('Signup/success.html');
     }
 }
+
+        

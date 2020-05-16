@@ -43,18 +43,18 @@ class User extends \Core\Model
 
     if(empty($this->errors))
     {
-    $password_hash = password_hash($this->password1, PASSWORD_DEFAULT);
+      $password_hash = password_hash($this->password1, PASSWORD_DEFAULT);
 
-    $sql = 'INSERT INTO users (username, email, pass)
-            VALUES (:login, :email, :password_hash)';
+      $sql = 'INSERT INTO users (username, email, pass)
+              VALUES (:login, :email, :password_hash)';
 
-    $db = static::getDB();
-    $stmt = $db->prepare($sql);
+      $db = static::getDB();
+      $stmt = $db->prepare($sql);
 
-    $stmt->bindValue(':login', $this->login, PDO::PARAM_STR);
-    $stmt->bindValue(':email', $this->email, PDO::PARAM_STR);
-    $stmt->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
-
+      $stmt->bindValue(':login', $this->login, PDO::PARAM_STR);
+      $stmt->bindValue(':email', $this->email, PDO::PARAM_STR);
+      $stmt->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
+      
       return $stmt->execute();
     }
     return false;
@@ -94,6 +94,78 @@ class User extends \Core\Model
     }
   }
 
+ /**
+  * 
+  * Add defalut categories of income to user basee
+  */
+ public function addDefalutIncomeCategories()
+  { 
+    $login = $this->login;
+    $user = static::findByLogin($login);
+    $user_id = $user->id;
+
+    $sql = 'SELECT name FROM incomes_category_default';
+    //$sql2 = "INSERT INTO incomes_category_assigned_to_users VALUES (NULL, :userid , :nameCategory')";
+
+    $db = static::getDB();
+    $stmt = $db->query($sql);
+    
+    while($row = $stmt->fetch())
+    {
+      $nameCategory =  $row['name'];
+      $db->query("INSERT INTO incomes_category_assigned_to_users VALUES (NULL, '$user_id' , '$nameCategory')");
+    }
+    return true;
+  }
+
+  /**
+  * 
+  * Add defalut categories of expense to user basee
+  */
+ public function addDefalutExpenseCategories()
+ { 
+   $login = $this->login;
+   $user = static::findByLogin($login);
+   $user_id = $user->id;
+
+   $sql = 'SELECT name FROM expenses_category_default';
+   //$sql2 = "INSERT INTO incomes_category_assigned_to_users VALUES (NULL, :userid , :nameCategory')";
+
+   $db = static::getDB();
+   $stmt = $db->query($sql);
+   
+   while($row = $stmt->fetch())
+   {
+     $nameCategory =  $row['name'];
+     $db->query("INSERT INTO expenses_category_assigned_to_users VALUES (NULL, '$user_id' , '$nameCategory')");
+   }
+   return true;
+ }
+
+   /**
+  * 
+  * Add defalut categories of expense to user basee
+  */
+  public function addDefalutPaymentMethodsCategories()
+  { 
+    $login = $this->login;
+    $user = static::findByLogin($login);
+    $user_id = $user->id;
+ 
+    $sql = 'SELECT name FROM payment_methods_default';
+    //$sql2 = "INSERT INTO incomes_category_assigned_to_users VALUES (NULL, :userid , :nameCategory')";
+ 
+    $db = static::getDB();
+    $stmt = $db->query($sql);
+    
+    while($row = $stmt->fetch())
+    {
+      $nameCategory =  $row['name'];
+      $db->query("INSERT INTO payment_methods_assigned_to_users VALUES (NULL, '$user_id' , '$nameCategory')");
+    }
+    return true;
+  }
+ 
   public static function emailExists($email)
   {
     return static::findByEmail($email) != false;
@@ -114,7 +186,7 @@ class User extends \Core\Model
       return $stmt->fetch();
   }
 
-  /**
+ /** 
    * Authenticate a user by email and password.
    *
    * funkcja do logowania przez email
@@ -136,6 +208,20 @@ class User extends \Core\Model
 
       return false;
   }
+ 
+  //funkcja do logowanie sprawdzajaca czy login jest w bazie  
+  public static function checkLogin($login, $password)
+  {
+    $user = static::findByLogin($login);
+    if ($user) 
+    {
+      if (password_verify($password, $user->pass)) 
+      {
+          return $user;
+      }
+    }
+    return false;
+  }
   
   public static function loginExists($login)
   {
@@ -156,18 +242,6 @@ class User extends \Core\Model
 
       return $stmt->fetch();
   }
-//funkcja do logowanie sprawdzajaca czy login jest w bazie  
-  public static function checkLogin($login, $password)
-  {
-    $user = static::findByLogin($login);
-    if ($user) {
-      if (password_verify($password, $user->pass)) {
-          return $user;
-      }
-  }
 
-  return false;
-
-  }
   
 }

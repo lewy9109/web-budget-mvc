@@ -4,7 +4,12 @@
 
 {% block body %}
 
+{% block header %}
+    {{ parent() }}
+{% endblock %}
 
-<h1>Dziekujemy za rejestracje!</h1>
-
+<div class = "log_panel" style = "width: 40%; margin-left: auto; margin-right: auto;">
+    <h1>Dziekujemy za rejestracje!</h1>
+    <a href="/login"><div class="lbutton">Zaloguj sie</div></a>
+</div>
 {% endblock %}
