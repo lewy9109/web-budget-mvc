@@ -4,9 +4,11 @@
 
 {% block body %}
 
+
+<!--
 <form action="/login/create" method="post">
     <div class="icon-adult">Login</div>
-    <!-- <input type="email"  name="email" placeholder="@ email.." autofocus value="{{email}}" /> -->
+   // <input type="email"  name="email" placeholder="@ email.." autofocus value="{{email}}" /> 
     <input type="login"  name="login" placeholder="login" autofocus value="{{login}}" />
 
    <div class ="icon-key">Hasło</div> 
@@ -14,7 +16,50 @@
 
     <input type="submit" value="Zaloguj">
 </form>
+-->
 
+{% block header %}
+    {{ parent() }}
+{% endblock %}
+<main>
+    <section class="wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <section class="hello_panel"> 
+                        
+                            <div class="discripton">
+                                <h1>Witaj w świecie finansów !</h1>
+                                <p>Dołącz do ludzi dbających o finanse osobiste. Z nami dowiesz się czy Twoje finanse idą w dobrą stronę. Dodawaj wszystkie swoje dochody oraz wydatki do programu, a my przedstawimy Ci jak ma się Twój portfel.</p> 
+                            </div>
+                        
+                    </section>
+                </div>
+                <div class="col">
+                    <div class = "log_panel">
+                    
+                        <form action="/login/create" method="post">
+                            <div class="icon-adult">Login</div>
+                            <input type ="text"  name="login" placeholder="login" autofocus value="{{login}}" />
+                        
+                           <div class ="icon-key">Hasło</div> 
+                            <input type="password" name="password" placeholder="hasło.." />
+                        
+                            <input type="submit" value="Zaloguj">
+                        </form>
+
+                            <a href="/signup"><div class="lbutton">Zarejestruj się</div></a>
+                
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</main>
+    {% block footer %}
+    {{ parent() }}
+    {% endblock %}
 {% endblock %}
 
                     

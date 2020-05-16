@@ -31,16 +31,13 @@ class Login extends \Core\Controller
 
             Auth::login($user);
 
-            //przekierowanie na strone po udanym logowaniu
-                //header('Location: http://'.$_SERVER['HTTP_HOST'].'/', true, 303);
-            //przekierowanie przez funkcje 
-            //$this->redirect('/');
             $this->redirect(Auth::getReturnToPage());
 
             exit;
         }else{
             
             View::renderTemplate('Login/new.html', ['login' => $_POST['login']]);
+           
         }
         
     }

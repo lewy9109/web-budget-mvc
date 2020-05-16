@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Moje finanse{% endblock %}
+
+{% block body %}
+
+   {% block header %}
+        {{ parent() }}
+    {% endblock %}
+<main>
+ 
+    {% block nav %}
+        {{ parent() }}
+    {% endblock %}
+
+    <section class="main_panel ">
+            
+        <div class="manage_panel">
+            <div class="heading"><i class="icon-minus"></i>Wydatek</div>
+
+            <form method="post" action = "/expense/create">
+                 Kwota:
+                <input type="text" name="amount" placeholder="kwota..">
+
+                 Data: 
+                <input type="date"  name="date" placeholder="yyyy-mm-dd">
+
+                Wybierz kategorie: 
+                <select name="category">
+                    <option value = "Transport" name ="Transport">Transport</option>
+                    <option name = "Książki">Książki</option>
+                    <option name = "Jedzenie">Jedzenie</option>
+                    <option name = "Czynsz">Czynsz</option>
+                    <option name = "Media"> Media</option>
+                    <option name = "Zdrowie"> Zdrowie</option>
+                    <option name = "Ubrania"> Ubrania</option>
+                    <option name = "Higiena"> Higiena </option>
+                    <option name = "Dzieci"> Dzieci</option>
+                    <option name = "Wycieczka"> Wycieczka</option>
+                    <option name = "Recepty">Recepty</option>
+                    <option name = "Podróż">Podróż</option>
+                    <option name = "Prezenty">Prezenty</option>
+                    <option name = "Inne">Inne</option>
+                </select>
+
+                Metoda płatności:
+                <select name="categoryPayment">
+                    <option value = "Transport" name ="gotowka">Gotówka</option>
+                    <option name = "kredytowa">Karta Kredytowa</option>
+                    <option name = "debetowa">Karta Debetowa</option>
+
+                </select>
+
+                Komentarz: 
+                <input type="text" name="comment" placeholder="komentarz..">
+                
+                <div style="display: flex; margin-top: 30px;">
+                    <input type="submit" value="Dodaj" style="width: 100%;">
+                </div>
+                
+            </form>
+        </div>
+    </section> 
+    
+</main>
+    
+{% block footer %}
+    {{ parent() }}
+{% endblock %}
+
+
+{% endblock %}

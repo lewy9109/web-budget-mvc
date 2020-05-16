@@ -82,10 +82,10 @@ abstract class Controller
     }
     public function requireLogin()
     {
-        if(! Auth::isLoggedin())
+        if(! Auth::isLoggedin())    
         {
-            Auth::rememberRequestedPage();
-            $this->redirect('/login');
+            Auth::rememberRequestedPage();  
+            $this->redirect('/');
         }
     }
 
