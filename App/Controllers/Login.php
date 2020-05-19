@@ -3,8 +3,9 @@
 namespace App\Controllers;
 
 use App\Auth;
-Use Core\View;
-Use App\Models\User;
+use Core\View;
+use App\Models\User;
+use APP\Flash;
 
 /**
  * Login controller
@@ -19,23 +20,25 @@ class Login extends \Core\Controller
      */
     public function newAction()
     {
+
         View::renderTemplate('Login/new.html');
     }
 
     public function createAction()
     {
         //checklogin() - logowanie przez login; autoritathe() - logowanie przez email;
-        $user = User::checkLogin($_POST['login'], $_POST['password']);
+        $user = User::authenticate($_POST['login'], $_POST['password']);
         
         if($user){
 
             Auth::login($user);
 
+            //Flash::addMessage('Zalogowano !');
             $this->redirect(Auth::getReturnToPage());
 
-            exit;
-        }else{
             
+        }else{
+            Flash::addMessage('Nieudane logowanie, spróbuj jeszcze raz');
             View::renderTemplate('Login/new.html', ['login' => $_POST['login']]);
            
         }

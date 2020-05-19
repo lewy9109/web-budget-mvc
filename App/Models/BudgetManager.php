@@ -148,14 +148,14 @@ class BudgetManager extends \Core\Model
     public function getIdPayment()
     {
         $user_id = $_SESSION['user_id'];
-		$expense_category = $this->categoryPayment;
+		$namePayment = $this->categoryPayment;
 		
 		$sql = 'SELECT id FROM payment_methods_assigned_to_users WHERE user_id = :id AND name = :name';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':id', $user_id, PDO::PARAM_INT);
-        $stmt->bindValue(':name', $expense_category, PDO::PARAM_STR);
+        $stmt->bindValue(':name', $namePayment, PDO::PARAM_STR);
 		
         $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
 

@@ -85,13 +85,19 @@ class User extends \Core\Model
     }
 
     //password
-    if($this->password1 != $this->password2){
+    if(isset($this->password1))
+    {
+      if($this->password1 != $this->password2)
+      {
         $this->errors[] = "Hasła nie zgadzją się";
-    }
+      }
 
-    if(strlen($this->password1) < 6){
+      if(strlen($this->password1) < 6)
+      {
         $this->errors[] = "Hasło musi posiadać co najmniej 6 znaków";
+      }
     }
+   
   }
 
  /**
@@ -186,6 +192,21 @@ class User extends \Core\Model
       return $stmt->fetch();
   }
 
+  public static function findById($id)
+  {
+      $sql = 'SELECT * FROM users WHERE id = :id';
+
+      $db = static::getDB();
+      $stmt = $db->prepare($sql);
+      $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+
+      $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+
+      $stmt->execute();
+
+      return $stmt->fetch();
+  }
+
  /** 
    * Authenticate a user by email and password.
    *
@@ -195,8 +216,8 @@ class User extends \Core\Model
    * @param string $password password
    *
    * @return mixed  The user object or false if authentication fails
-   */
-  public static function  authenticate($email, $password)
+    */
+  public static function  authenticateEmail($email, $password)
   {
       $user = static::findByEmail($email);
 
@@ -209,8 +230,9 @@ class User extends \Core\Model
       return false;
   }
  
+ 
   //funkcja do logowanie sprawdzajaca czy login jest w bazie  
-  public static function checkLogin($login, $password)
+  public static function authenticate($login, $password)
   {
     $user = static::findByLogin($login);
     if ($user) 
@@ -242,6 +264,48 @@ class User extends \Core\Model
 
       return $stmt->fetch();
   }
+
+  public function updateProfile($data)
+  {
+    //$this->username = $data['username'];
+    $this->email = $data['email'];
+    $this->password1 = $data['password1'];
+
+    if($data['password1'] != '')
+    {
+      $this->password1 = $data['password1'];
+    }
+
+    $this->validate();
+
+    if(empty($this->errors))
+    {
+      $sql = 'UPDATE users SET email = :email'; 
+      if(isset($this->password1))
+      {
+        $sql .= ', pass = :password_hash';
+      }
+       $sql .= "\nWHERE id = :id";
+
+      $db =static::getDB();
+      $stmt = $db->prepare($sql);
+
+      $stmt->bindValue(':email', $this->email, PDO::PARAM_STR);
+      $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
+
+      if(isset($this->password1))
+      {
+        $password_hash = password_hash($this->password1, PASSWORD_DEFAULT);
+        $stmt->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
+      }
+   
+
+      return $stmt->execute();
+
+    }
+    return false;
+  }
+
 
   
 }
