@@ -4,13 +4,14 @@ namespace App\Controllers;
 
 use App\Models\BudgetManager;
 use \Core\View;
+use App\Auth;
 
 /**
  * Home controller
  *
  * PHP version 7.0
  */
-class Income extends \Core\Controller
+class Income extends Authenticated
 {
 
     /**
@@ -20,6 +21,8 @@ class Income extends \Core\Controller
      */
     public function indexAction()
     {
+        
+
         View::renderTemplate('Income/index.html');
     }
 

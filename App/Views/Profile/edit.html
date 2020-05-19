@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Ustawienia{% endblock %}
+
+{% block body %}
+
+   {% block header %}
+        {{ parent() }}
+    {% endblock %}
+<main>
+ 
+    {% block nav %}
+        {{ parent() }}
+    {% endblock %}
+
+   <h1>Edytuj profil</h1>
+   <div class = "log_panel" style="width: 50%; margin-left:auto; margin-right: auto;">
+    
+        <form method="post" action= "/profile/update">
+
+            <div class="icon-mail-alt">Email</div> 
+            <input type="email" id="email" name="email" placeholder="@.." value="{{user.email}}"required />
+
+            <div class ="icon-key">Hasło</div> 
+            <input type="password" id="password1" name="password1" placeholder="hasło.." required />
+
+            <div class ="icon-key">Powtórz hasło</div> 
+            <input type="password"  id="password2" name="password2" placeholder="powtórz hasło.."/>
+
+            <!--<div class="g-recaptcha" data-sitekey="6LeXE-8UAAAAAIfwIS7jNn4aeKAJa7p_QwlvlMsJ"></div> -->
+            <div></div>
+            <input type="submit" value="Zapisz">
+            <a href="/profile/show"><div class="lbutton">Anuluj</div></a>
+        </from>
+    </div>
+
+</form>
+    
+</main>
+    
+{% block footer %}
+    {{ parent() }}
+{% endblock %}
+
+
+{% endblock %}

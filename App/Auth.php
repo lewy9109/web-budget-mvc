@@ -2,6 +2,8 @@
 
 namespace App;
 
+use \App\Models\User;
+
 class Auth
 {
 
@@ -30,10 +32,7 @@ class Auth
         session_destroy();
     }
 
-    public static function isLoggedin()
-    {
-        return isset($_SESSION['user_id']);
-    }
+
 
     public static function rememberRequestedPage()
     {
@@ -43,5 +42,12 @@ class Auth
     public static function getReturnToPage()
     {
         return $_SESSION['return_to'] ?? '/item' ;
+    }
+    public static function getUser()
+    {
+       if(isset($_SESSION['user_id']))
+       {
+            return User::findById($_SESSION['user_id']);
+       }
     }
 }

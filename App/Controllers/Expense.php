@@ -5,13 +5,14 @@ namespace App\Controllers;
 use App\Models\BudgetManager;
 use App\Models\User;
 use \Core\View;
+use App\Auth;
 
 /**
  * Home controller
  *
  * PHP version 7.0
  */
-class Expense extends \Core\Controller
+class Expense extends Authenticated
 {
 
     /**
@@ -21,6 +22,8 @@ class Expense extends \Core\Controller
      */
     public function indexAction()
     {
+        
+        
         View::renderTemplate('Expense/index.html');
     }
 

@@ -12,7 +12,42 @@
         {% block nav %}
             {{ parent() }}
         {% endblock %}
-        co tu jest
+        <section class="main_panel ">
+            <div class="heading"><i class="icon-th-list"></i>Bilans</div>
+            
+            <div class = "bilansIncome" >
+                <h3>Wpływy:</h3>
+                <table>
+                    <tr>
+                        <th>Kwota</th> <th>Data</th> <th>Kategoria</th>
+                     </tr>
+                {% for bilanceIncome in bilanceIncome %}
+                
+                    <tr>
+                       <td>{{ bilanceIncome.amount }}</td> <td>{{ bilanceIncome.date_of_income }}</td> <td>{{ bilanceIncome.name }}</td>
+                    </tr>
+                
+                {% endfor %}
+            </table>
+            </div>
+            
+            <div class = "bilansExpense" >
+                <h3>Wydatki:</h3>
+                <table>
+                    <tr>
+                        <th>Kwota</th> <th>Data</th> <th>Kategoria</th>
+                     </tr>
+                    {% for bilanceE in bilanceE %}
+                    <tr>
+                       <td>{{ bilanceE.amount }}</td> <td>{{ bilanceE.date_of_expense }}</td> <td>{{ bilanceE.name }}</td>
+                    </tr>
+                    {% endfor %}
+            </table>
+            </div>
+                
+           
+
+        </section>
         
     </main>
 
