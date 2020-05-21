@@ -24,6 +24,7 @@
                             <div >
                                 <span class="">Wybierz okres: </span>
                             </div>
+
                             <select name="periodsOptions">
                                 <option value="current_month">Obecny Miesiąc</option>
                                 <option value="previous_month">Poprzedni Miesiąc</option>
@@ -33,6 +34,7 @@
                         
                         <input type="submit" value="Zatwierdź">
                     </form>
+                    <span>Obecny Miesiąc</span>
                     <div class = "bilansIncome" >
                         <h3>Wpływy:</h3>
                         <table>
@@ -46,8 +48,10 @@
                                     </tr>
                         
                                 {% endfor %}
-                                <th>SUMA: </th> <th>{{ total_income.sum }}</th>
-                        </table>
+                                <tr>
+                                    <th>SUMA: </th> <th>{{ total_income.sum }} {% if total_income.sum == 0 %} <span>0</span> {% endif %} PLN</th>
+                                </tr>
+                            </table>
                     </div>
                     <div class = "bilansExpense" >
                         <h3>Wydatki:</h3>
@@ -60,8 +64,10 @@
                                     <td>{{ bilanceE.amount }}</td> <td>{{ bilanceE.date_of_expense }}</td> <td>{{ bilanceE.name }}</td>
                                     </tr>
                                 {% endfor %}
-                                <th>SUMA: </th> <th>{{ total_expense.sum }}</th>
-                        </table>
+                                <tr>
+                                    <th>SUMA: </th> <th>{{ total_expense.sum }} {% if total_expense.sum == 0 %} <span>0</span> {% endif %} PLN</th>
+                                </tr>
+                            </table>
                     </div>
                     
                     
