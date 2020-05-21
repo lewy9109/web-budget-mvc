@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Moje Finance{% endblock %}
+
+{% block body %}
+   
+    {% block header %}
+        {{ parent() }}
+    {% endblock %}
+
+    <main>
+        {% block nav %}
+            {{ parent() }}
+        {% endblock %}
+        <section class="main_panel ">
+         
+            <div class="">
+                
+                    <legend class=""> Twoje Finanse </legend>
+                    
+                    <form  method="post" action="/ShowBilance/show">
+
+                        <div class="input-group mb-2 w-75 mx-auto">
+                            <div >
+                                <span class="">Wybierz okres: </span>
+                            </div>
+                            <select name="periodsOptions">
+                                <option value="current_month">Obecny Miesiąc</option>
+                                <option value="previous_month">Poprzedni Miesiąc</option>
+                                <option value="current_year">Obecny Rok</option>
+                            </select>
+                        </div>
+                        
+                        <input type="submit" value="Zatwierdź">
+                    </form>
+                    <div class = "bilansIncome" >
+                        <h3>Wpływy:</h3>
+                        <table>
+                            <tr>
+                                <th>Kwota</th> <th>Data</th> <th>Kategoria</th>
+                             </tr>
+                                {% for bilanceIncome in bilanceIncome %}
+                        
+                                    <tr>
+                                    <td>{{ bilanceIncome.amount }}</td> <td>{{ bilanceIncome.date_of_income }}</td> <td>{{ bilanceIncome.name }}</td>
+                                    </tr>
+                        
+                                {% endfor %}
+                                <th>SUMA: </th> <th>{{ total_income.sum }}</th>
+                        </table>
+                    </div>
+                    <div class = "bilansExpense" >
+                        <h3>Wydatki:</h3>
+                        <table>
+                            <tr>
+                                <th>Kwota</th> <th>Data</th> <th>Kategoria</th>
+                             </tr>
+                                {% for bilanceE in bilanceE %}
+                                    <tr>
+                                    <td>{{ bilanceE.amount }}</td> <td>{{ bilanceE.date_of_expense }}</td> <td>{{ bilanceE.name }}</td>
+                                    </tr>
+                                {% endfor %}
+                                <th>SUMA: </th> <th>{{ total_expense.sum }}</th>
+                        </table>
+                    </div>
+                    
+                    
+                    
+                     
+                     
+
+        </section>
+        
+    </main>
+
+   
+{% block footer %}
+    {{ parent() }}
+{% endblock %}
+
+{% endblock %}

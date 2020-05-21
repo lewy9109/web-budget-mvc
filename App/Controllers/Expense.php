@@ -32,10 +32,10 @@ class Expense extends Authenticated
         $expense = new BudgetManager($_POST);
         if($expense->saveExpense())
         {
-            echo "Dodano";
+            $this->redirect('/item');
             exit;
         }else{
-           echo "Nie udalo sie";
+            $this->redirect('/expense');
         }
   
         

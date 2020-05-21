@@ -49,6 +49,8 @@ class View
             $twig->addGlobal('session', $_SESSION);
             $twig->addGlobal('current_user', \App\Auth::getUser());
             $twig->addGlobal('flash_message', \App\Flash::getMessage());
+            $twig->addGlobal('total_income', \App\TotalIncome::getTotalUserIncome());
+            $twig->addGlobal('total_expense', \App\TotalExpense::getTotalUserExpense());
         }
 
         echo $twig->render($template, $args);

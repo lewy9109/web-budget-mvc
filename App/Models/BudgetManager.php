@@ -193,7 +193,6 @@ class BudgetManager extends \Core\Model
         //Check data
 
         
-        
         if(strlen($this->date) < 10 && strlen($this->date) > 0 )
         {
             $this->errors[] ="Nie prawidłowy format daty: yyyy-mm-dd";
