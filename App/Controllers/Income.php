@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Models\BudgetManager;
 use \Core\View;
-use App\Auth;
+
 
 /**
  * Home controller
@@ -22,7 +22,6 @@ class Income extends Authenticated
     public function indexAction()
     {
         
-
         View::renderTemplate('Income/index.html');
     }
 
@@ -31,10 +30,10 @@ class Income extends Authenticated
         $income = new BudgetManager($_POST);
         if($income->saveIncome())
         {
-            echo "Dodano";
+            $this->redirect('/item');
             exit;
         }else{
-           echo "Nie udalo sie";
+            $this->redirect('/income');
         }
   
         

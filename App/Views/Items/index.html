@@ -21,14 +21,14 @@
                     <tr>
                         <th>Kwota</th> <th>Data</th> <th>Kategoria</th>
                      </tr>
-                {% for bilanceIncome in bilanceIncome %}
+                        {% for bilanceIncome in bilanceIncome %}
                 
-                    <tr>
-                       <td>{{ bilanceIncome.amount }}</td> <td>{{ bilanceIncome.date_of_income }}</td> <td>{{ bilanceIncome.name }}</td>
-                    </tr>
+                            <tr>
+                            <td>{{ bilanceIncome.amount }}</td> <td>{{ bilanceIncome.date_of_income }}</td> <td>{{ bilanceIncome.name }}</td>
+                            </tr>
                 
-                {% endfor %}
-            </table>
+                        {% endfor %}
+                </table>
             </div>
             
             <div class = "bilansExpense" >
@@ -37,11 +37,11 @@
                     <tr>
                         <th>Kwota</th> <th>Data</th> <th>Kategoria</th>
                      </tr>
-                    {% for bilanceE in bilanceE %}
-                    <tr>
-                       <td>{{ bilanceE.amount }}</td> <td>{{ bilanceE.date_of_expense }}</td> <td>{{ bilanceE.name }}</td>
-                    </tr>
-                    {% endfor %}
+                        {% for bilanceE in bilanceE %}
+                            <tr>
+                            <td>{{ bilanceE.amount }}</td> <td>{{ bilanceE.date_of_expense }}</td> <td>{{ bilanceE.name }}</td>
+                            </tr>
+                        {% endfor %}
             </table>
             </div>
                 
