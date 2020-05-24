@@ -9,11 +9,14 @@ use App\Models\BilansManager;
  *
  * PHP version 7.0
  */
-class ExpensesByCategories
+class ExpensesByCategories 
 {
 	public static function getExpensesByCategories()
     {
-		return BilansManager::getExpensesGroupedByCategories();
+        if(isset($_SESSION['user_id']))
+        {
+            return BilansManager::getExpensesGroupedByCategories();
+        }
     }
 
 }
