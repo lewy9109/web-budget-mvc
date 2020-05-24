@@ -13,6 +13,10 @@ class TotalExpense
 {
 	public static function getTotalUserExpense()
     {
-		return BilansManager::getExpenseTotalAmount();
+      if (isset($_SESSION['user_id']))
+      {
+        return BilansManager::getExpenseTotalAmount();
+      }
+		
     }
 }

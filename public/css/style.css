@@ -110,7 +110,6 @@ main {
     background-color: rgb(245, 245, 243);
     padding: 20px;
 }
-
 .heading {
     justify-content: center;
     width: 100%;
@@ -118,6 +117,9 @@ main {
     font-size: 30px;
     font-weight: 600;
     margin-bottom: 20px;
+}
+.datePanel{
+    padding: 10px;
 }
 
 /*Main nav*/
@@ -128,19 +130,7 @@ color: #007bff;
 padding: 12px 16px;
 z-index: 1;
 }
-/*
-.dropdown:hover .dropdown-content {
-display: block;
-}
-.dropdown-content:hover {
-background-color: rgb(236, 198, 29);
-color: #007bff;
-}
-.nav-item:hover {
-    background-color: rgb(253, 229, 116);
-    border-radius: 5px;
-}
-*/
+
 
 /*Inputy*/
 input[type=text], 

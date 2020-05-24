@@ -13,6 +13,10 @@ class TotalIncome
 {
 	public static function getTotalUserIncome()
     {
-		return BilansManager::getIncomeTotalAmount();
+      if (isset($_SESSION['user_id']))
+      {
+        return BilansManager::getIncomeTotalAmount();
+      }
+		
     }
 }

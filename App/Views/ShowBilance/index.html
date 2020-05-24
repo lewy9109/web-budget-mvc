@@ -1,87 +1,111 @@
-{% extends "base.html" %}
-
-{% block title %}Moje Finance{% endblock %}
-
-{% block body %}
-   
-    {% block header %}
-        {{ parent() }}
-    {% endblock %}
-
-    <main>
-        {% block nav %}
-            {{ parent() }}
-        {% endblock %}
-        <section class="main_panel ">
-         
-            <div class="">
-                
-                    <legend class=""> Twoje Finanse </legend>
-                    
-                    <form  method="post" action="/ShowBilance/show">
-
-                        <div class="input-group mb-2 w-75 mx-auto">
-                            <div >
-                                <span class="">Wybierz okres: </span>
-                            </div>
-
-                            <select name="periodsOptions">
-                                <option value="current_month">Obecny Miesiąc</option>
-                                <option value="previous_month">Poprzedni Miesiąc</option>
-                                <option value="current_year">Obecny Rok</option>
-                            </select>
-                        </div>
-                        
-                        <input type="submit" value="Zatwierdź">
-                    </form>
-                    <span>Obecny Miesiąc</span>
-                    <div class = "bilansIncome" >
-                        <h3>Wpływy:</h3>
-                        <table>
-                            <tr>
-                                <th>Kwota</th> <th>Data</th> <th>Kategoria</th>
-                             </tr>
-                                {% for bilanceIncome in bilanceIncome %}
-                        
-                                    <tr>
-                                    <td>{{ bilanceIncome.amount }}</td> <td>{{ bilanceIncome.date_of_income }}</td> <td>{{ bilanceIncome.name }}</td>
-                                    </tr>
-                        
-                                {% endfor %}
-                                <tr>
-                                    <th>SUMA: </th> <th>{{ total_income.sum }} {% if total_income.sum == 0 %} <span>0</span> {% endif %} PLN</th>
-                                </tr>
-                            </table>
-                    </div>
-                    <div class = "bilansExpense" >
-                        <h3>Wydatki:</h3>
-                        <table>
-                            <tr>
-                                <th>Kwota</th> <th>Data</th> <th>Kategoria</th>
-                             </tr>
-                                {% for bilanceE in bilanceE %}
-                                    <tr>
-                                    <td>{{ bilanceE.amount }}</td> <td>{{ bilanceE.date_of_expense }}</td> <td>{{ bilanceE.name }}</td>
-                                    </tr>
-                                {% endfor %}
-                                <tr>
-                                    <th>SUMA: </th> <th>{{ total_expense.sum }} {% if total_expense.sum == 0 %} <span>0</span> {% endif %} PLN</th>
-                                </tr>
-                            </table>
-                    </div>
-                    
-                    
-                    
-                     
-                     
-
-        </section>
-        
-    </main>
-
-   
-{% block footer %}
-    {{ parent() }}
+{% extends "base.html" %} 
+{% block title %}Moje Finance{% endblock %} 
+{% block body %} 
+{% block header %} 
+{{ parent() }} 
 {% endblock %}
 
+<main>
+  {% block nav %} {{ parent() }} {% endblock %}
+
+  <section class="main_panel">
+    <legend class="">Twoje Finanse</legend>
+    <div class="datePanel" style="padding: 10px;">
+      <form method="post" action="/ShowBilance/show">
+
+        <button type="submit" class="btn btn-primary" value="current_month" name="current_month" onchange="if(this.options[this.selectedIndex]){ this.form.submit(); }">Bieżący Miesiąc</button>
+        <button type="submit" class="btn btn-primary" value="previous_month" name="previous_month" onchange="if(this.options[this.selectedIndex]){ this.form.submit(); }">Poprzedni Miesiąc</button>
+        <button type="submit" class="btn btn-primary" value="current_year" name="current_year" onchange="if(this.options[this.selectedIndex]){ this.form.submit(); }">Bieżący rok</button>
+  
+      </form>
+    </div>
+    
+
+    <form method="post" action="/ShowBilance/show">
+                      
+        <!-- Button trigger modal -->
+        <button type="button"  class="btn btn-primary" form="form1" data-toggle="modal"  data-target="#exampleModal" >
+          <i class="icon-calendar"></i> Wybierz okres
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true" >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Wybierz Okres</h5>
+                <button type="button"  class="close"  data-dismiss="modal" aria-label="Close" >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <label for="date"> Od kiedy: </label>
+                <input  type="date"   placeholder="yyyy-mm-dd"  id="date"  name="custom_start" />
+                <label for="date"> Do kiedy: </label>
+                <input type="date" placeholder="yyyy-mm-dd" id="date" name="custom_end" />
+              </div>
+              <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" name="customize_period"  value="OK" />
+                <input type="submit"  class="btn btn-secondary" data-dismiss="modal"  value="Anuluj"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+    </form> 
+    <div class="bilansIncome">
+      <h3>Wpływy:</h3>
+      <table>
+        <tr>
+          <th>Kwota</th>  <th>Data</th> <th>Kategoria</th>
+        </tr>
+        {% for bilanceIncome in bilanceIncome %}
+
+        <tr>
+          <td>{{ bilanceIncome.amount }}</td>
+          <td>{{ bilanceIncome.date_of_income }}</td>
+          <td>{{ bilanceIncome.name }}</td>
+        </tr>
+
+        {% endfor %}
+        <tr>
+          <th>SUMA:</th>
+          <th>
+            {{ total_income.sum }} {% if total_income.sum == 0 %}
+            <span>0</span> {% endif %} PLN
+          </th>
+        </tr>
+      </table>
+    </div>
+
+    <div class="bilansExpense">
+      <h3>Wydatki:</h3>
+      <table>
+        <tr>
+          <th>Kwota</th> <th>Data</th> <th>Kategoria</th>
+        </tr>
+        {% for bilanceE in bilanceE %}
+        <tr>
+          <td>{{ bilanceE.amount }}</td>
+          <td>{{ bilanceE.date_of_expense }}</td>
+          <td>{{ bilanceE.name }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <th>SUMA:</th>
+          <th>
+            {{ total_expense.sum }} {% if total_expense.sum == 0 %}
+            <span>0</span> {% endif %} PLN
+          </th>
+        </tr>
+      </table>
+    </div>
+
+  </section>
+</main>
+
+  {% block footer %} 
+  {{ parent() }} 
+
+  {% endblock %} 
 {% endblock %}
