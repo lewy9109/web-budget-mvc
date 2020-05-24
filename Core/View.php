@@ -51,6 +51,8 @@ class View
             $twig->addGlobal('flash_message', \App\Flash::getMessage());
             $twig->addGlobal('total_income', \App\TotalIncome::getTotalUserIncome());
             $twig->addGlobal('total_expense', \App\TotalExpense::getTotalUserExpense());
+            $twig->addGlobal('incomes_by_categories', \App\IncomesByCategories::getIncomesByCategories());
+            $twig->addGlobal('expenses_by_categories', \App\ExpensesByCategories::getExpensesByCategories());
         }
 
         echo $twig->render($template, $args);

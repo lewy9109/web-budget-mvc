@@ -75,6 +75,7 @@ class BilansManager extends \Core\Model
 
     public static function getExpenseIncludeDate()
     {
+      
         $date = new \DateTime();
 
         if(isset($_SESSION['custom_start']) && isset($_SESSION['custom_end']))
@@ -204,39 +205,36 @@ class BilansManager extends \Core\Model
         $date = new \DateTime();
         if(!isset($_SESSION['period']))
         $_SESSION['period'] = "current_month";
-        $userid = $_SESSION['user_id'];
-
-        if(isset($_SESSION['user_id']))
-        {
-            $period = $_SESSION['period'];
-            $userid = $_SESSION['user_id'];
-            if($period=='' && isset($_SESSION['custom_start'])&& isset($_SESSION['custom_end']))
+        
+        
+            if(isset($_SESSION['custom_start']) && isset($_SESSION['custom_end']))
             {
                 $endDate = $_SESSION['custom_end'];
-                $startData =$_SESSION['custom_start'];
+                $startData = $_SESSION['custom_start'];
             }
-            else
+    
+            if (isset($_SESSION['period']))
             {
-                if($period == "current_month")
+                if($_SESSION['period'] == "current_month")
                 {
                     $endDate =  $date->format('Y-m-d') . "\n";
                     $date->modify('first day of this month');
                     $startData = $date->format('Y-m-d') . "\n";
                 }
-
-                if($period == "previous_month")
+        
+                if($_SESSION['period'] == "previous_month")
                 {
                     $date->modify('last day of -1 month');
                     $endDate =  $date->format('Y-m-d') . "\n";
                     $date->modify('first day of this month');
                     $startData = $date->format('Y-m-d') . "\n";
                 }
-
-                if($period == "current_year")
+        
+                if($_SESSION['period'] == "current_year")
                 {
                     $endDate =  $date->format('Y-m-d') . "\n";
                     $month = substr($date->format('Y-m-d'), 5,2);
-
+        
                     if(substr($month, 0,1) == '0')
                     {
                         $month = substr($month, 1,1); 
@@ -248,8 +246,8 @@ class BilansManager extends \Core\Model
                     $date->modify("first day of - $month month");
                     $startData = $date->format('Y-m-d') . "\n";
                 }
-            }  
-        }
+            }
+        
 
         $sql = "SELECT SUM(amount) AS sum FROM incomes 
         WHERE user_id = :id AND date_of_income BETWEEN :FirstTime AND :LastTime ";
@@ -273,52 +271,48 @@ class BilansManager extends \Core\Model
         $date = new \DateTime();
         if(!isset($_SESSION['period']))
         $_SESSION['period'] = "current_month";
-        $userid = $_SESSION['user_id'];
-
-        if(isset($_SESSION['user_id']))
+       
+        if(isset($_SESSION['custom_start']) && isset($_SESSION['custom_end']))
         {
-            $period = $_SESSION['period'];
-            $userid = $_SESSION['user_id'];
-            if($period=='' && isset($_SESSION['custom_start'])&& isset($_SESSION['custom_end']))
-            {
-                $endDate = $_SESSION['custom_end'];
-                $startData =$_SESSION['custom_start'];
-            }
-            else
-            {
-                if($period == "current_month")
-                {
-                    $endDate =  $date->format('Y-m-d') . "\n";
-                    $date->modify('first day of this month');
-                    $startData = $date->format('Y-m-d') . "\n";
-                }
-
-                if($period == "previous_month")
-                {
-                    $date->modify('last day of -1 month');
-                    $endDate =  $date->format('Y-m-d') . "\n";
-                    $date->modify('first day of this month');
-                    $startData = $date->format('Y-m-d') . "\n";
-                }
-
-                if($period == "current_year")
-                {
-                    $endDate =  $date->format('Y-m-d') . "\n";
-                    $month = substr($date->format('Y-m-d'), 5,2);
-
-                    if(substr($month, 0,1) == '0')
-                    {
-                        $month = substr($month, 1,1); 
-                        $month -= 1;
-                    }else{
-                        $month -= 1;
-                    }
-                    
-                    $date->modify("first day of - $month month");
-                    $startData = $date->format('Y-m-d') . "\n";
-                }
-            }  
+            $endDate = $_SESSION['custom_end'];
+            $startData = $_SESSION['custom_start'];
         }
+
+        if (isset($_SESSION['period']))
+        {
+            if($_SESSION['period'] == "current_month")
+            {
+                $endDate =  $date->format('Y-m-d') . "\n";
+                $date->modify('first day of this month');
+                $startData = $date->format('Y-m-d') . "\n";
+            }
+    
+            if($_SESSION['period'] == "previous_month")
+            {
+                $date->modify('last day of -1 month');
+                $endDate =  $date->format('Y-m-d') . "\n";
+                $date->modify('first day of this month');
+                $startData = $date->format('Y-m-d') . "\n";
+            }
+    
+            if($_SESSION['period'] == "current_year")
+            {
+                $endDate =  $date->format('Y-m-d') . "\n";
+                $month = substr($date->format('Y-m-d'), 5,2);
+    
+                if(substr($month, 0,1) == '0')
+                {
+                    $month = substr($month, 1,1); 
+                    $month -= 1;
+                }else{
+                    $month -= 1;
+                }
+                
+                $date->modify("first day of - $month month");
+                $startData = $date->format('Y-m-d') . "\n";
+            }
+        }
+    
     
         $sql = "SELECT SUM(amount) AS sum FROM expenses 
         WHERE user_id = :id AND date_of_expense BETWEEN :FirstTime AND :LastTime ";
@@ -336,7 +330,138 @@ class BilansManager extends \Core\Model
         return $stmt->fetch();
     }
 
+
+    public static function getIncomesGroupedByCategories()
+    {
+        $date = new \DateTime();
+        if(!isset($_SESSION['period']))
+        $_SESSION['period'] = "current_month";
+
+        if(isset($_SESSION['custom_start']) && isset($_SESSION['custom_end']))
+        {
+            $endDate = $_SESSION['custom_end'];
+            $startData = $_SESSION['custom_start'];
+        }
+
+        if (isset($_SESSION['period']))
+        {
+            if($_SESSION['period'] == "current_month")
+            {
+                $endDate =  $date->format('Y-m-d') . "\n";
+                $date->modify('first day of this month');
+                $startData = $date->format('Y-m-d') . "\n";
+            }
+    
+            if($_SESSION['period'] == "previous_month")
+            {
+                $date->modify('last day of -1 month');
+                $endDate =  $date->format('Y-m-d') . "\n";
+                $date->modify('first day of this month');
+                $startData = $date->format('Y-m-d') . "\n";
+            }
+    
+            if($_SESSION['period'] == "current_year")
+            {
+                $endDate =  $date->format('Y-m-d') . "\n";
+                $month = substr($date->format('Y-m-d'), 5,2);
+    
+                if(substr($month, 0,1) == '0')
+                {
+                    $month = substr($month, 1,1); 
+                    $month -= 1;
+                }else{
+                    $month -= 1;
+                }
+                
+                $date->modify("first day of - $month month");
+                $startData = $date->format('Y-m-d') . "\n";
+            }
+        }
+
+        $sql = "SELECT cat.name AS name, SUM(inc.amount) AS sum 
+        FROM incomes_category_assigned_to_users AS cat INNER JOIN incomes AS inc 
+        WHERE inc.income_category_assigned_to_user_id = cat.id 
+        AND inc.date_of_income BETWEEN :FirstTime AND :LastTime
+        AND inc.user_id = :id GROUP BY cat.name ORDER BY SUM(inc.amount) DESC";
+    
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $stmt->bindValue(':FirstTime', $startData, PDO::PARAM_STR);
+        $stmt->bindValue(':LastTime', $endDate, PDO::PARAM_STR);
+
+        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+
+    }
+    public static function getExpensesGroupedByCategories()
+    {
+        $date = new \DateTime();
+        if(!isset($_SESSION['period']))
+        $_SESSION['period'] = "current_month";
+
+        if(isset($_SESSION['custom_start']) && isset($_SESSION['custom_end']))
+        {
+            $endDate = $_SESSION['custom_end'];
+            $startData = $_SESSION['custom_start'];
+        }
+
+        if (isset($_SESSION['period']))
+        {
+            if($_SESSION['period'] == "current_month")
+            {
+                $endDate =  $date->format('Y-m-d') . "\n";
+                $date->modify('first day of this month');
+                $startData = $date->format('Y-m-d') . "\n";
+            }
+    
+            if($_SESSION['period'] == "previous_month")
+            {
+                $date->modify('last day of -1 month');
+                $endDate =  $date->format('Y-m-d') . "\n";
+                $date->modify('first day of this month');
+                $startData = $date->format('Y-m-d') . "\n";
+            }
+    
+            if($_SESSION['period'] == "current_year")
+            {
+                $endDate =  $date->format('Y-m-d') . "\n";
+                $month = substr($date->format('Y-m-d'), 5,2);
+    
+                if(substr($month, 0,1) == '0')
+                {
+                    $month = substr($month, 1,1); 
+                    $month -= 1;
+                }else{
+                    $month -= 1;
+                }
+                
+                $date->modify("first day of - $month month");
+                $startData = $date->format('Y-m-d') . "\n";
+            }
+        }
+
+        $sql = "SELECT cat.name AS name, SUM(inc.amount) AS sum 
+        FROM expenses_category_assigned_to_users AS cat INNER JOIN expenses AS inc 
+        WHERE inc.expense_category_assigned_to_user_id = cat.id 
+        AND inc.date_of_expense BETWEEN :FirstTime AND :LastTime
+        AND inc.user_id = :id GROUP BY cat.name ORDER BY SUM(inc.amount) DESC";
+    
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $stmt->bindValue(':FirstTime', $startData, PDO::PARAM_STR);
+        $stmt->bindValue(':LastTime', $endDate, PDO::PARAM_STR);
+
+        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
   
-
-
+       
 }
