@@ -20,23 +20,24 @@ class Config
      * Database name
      * @var string
      */
-    const DB_NAME = 'krystia4_finance'; //finance /krystia4_finance
+    const DB_NAME = 'finance'; //finance /krystia4_finance
 
     /**
      * Database user
      * @var string
      */
-    const DB_USER = 'krystia4_finance'; //root krystia4_finance
+    const DB_USER = 'root'; //root krystia4_finance
 
     /**
      * Database password
      * @var string
      */
-    const DB_PASSWORD = 'Krylew5399'; //null Krylew5399
+    const DB_PASSWORD = ''; //null Krylew5399
 
     /**
      * Show or hide error messages on screen
      * @var boolean
      */
     const SHOW_ERRORS = true;
+
 }

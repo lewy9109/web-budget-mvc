@@ -1,189 +1,211 @@
-{% extends "base.html" %} 
-{% block title %}Moje Finance{% endblock %} 
-
-{% block body %} 
-{% block header %} 
-{{ parent() }} 
-{% endblock %}
+{% extends "base.html" %} {% block title %}Moje Finance{% endblock %} {% block body %} {% block header %} {{ parent() }} {% endblock %}
 
 <main>
-  {% block nav %} {{ parent() }} {% endblock %}
+    {% block nav %} {{ parent() }} {% endblock %}
 
-  <section class="main_panel">
-    <legend class="">Twoje Finanse</legend>
-    <div class="datePanel" style="padding: 10px;">
-      <form method="post" action="/ShowBilance/show">
+    <section class="main_panel">
+        <legend class="">Twoje Finanse</legend>
+        <div class="datePanel" style="padding: 10px;">
+            <form method="post" action="/ShowBilance/show">
 
-        <button type="submit" class="btn btn-primary" value="current_month" name="current_month" onchange="if(this.options[this.selectedIndex]){ this.form.submit(); }">Bieżący Miesiąc</button>
-        <button type="submit" class="btn btn-primary" value="previous_month" name="previous_month" onchange="if(this.options[this.selectedIndex]){ this.form.submit(); }">Poprzedni Miesiąc</button>
-        <button type="submit" class="btn btn-primary" value="current_year" name="current_year" onchange="if(this.options[this.selectedIndex]){ this.form.submit(); }">Bieżący rok</button>
-  
-      </form>
-    </div>
-    
+                <button type="submit" id="current_month" class="btn btn-primary" value="current_month" name="current_month" onchange="if(this.options[this.selectedIndex]){ this.form.submit(); }">Bieżący Miesiąc</button>
+                <button type="submit" id="previous_month" class="btn btn-primary" value="previous_month" name="previous_month" onchange="if(this.options[this.selectedIndex]){ this.form.submit(); }">Poprzedni Miesiąc</button>
+                <button type="submit" id="current_year" class="btn btn-primary" value="current_year" name="current_year" onchange="if(this.options[this.selectedIndex]){ this.form.submit(); }">Bieżący rok</button>
 
-    <form method="post" action="/ShowBilance/show">
-                      
-        <!-- Button trigger modal -->
-        <button type="button"  class="btn btn-primary" form="form1" data-toggle="modal"  data-target="#exampleModal" >
+            </form>
+        </div>
+
+
+        <form method="post" action="/ShowBilance/show">
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
           <i class="icon-calendar"></i> Wybierz okres
         </button>
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true" >
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Wybierz Okres</h5>
-                <button type="button"  class="close"  data-dismiss="modal" aria-label="Close" >
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Wybierz Okres</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
-              </div>
-              <div class="modal-body">
-                <label for="date"> Od kiedy: </label>
-                <input  type="date"   placeholder="yyyy-mm-dd"  id="date"  name="custom_start" />
-                <label for="date"> Do kiedy: </label>
-                <input type="date" placeholder="yyyy-mm-dd" id="date" name="custom_end" />
-              </div>
-              <div class="modal-footer">
-                <input type="submit" class="btn btn-primary" name="customize_period"  value="OK" />
-                <input type="submit"  class="btn btn-secondary" data-dismiss="modal"  value="Anuluj"/>
-              </div>
+                        </div>
+                        <div class="modal-body">
+                            <label for="date"> Od kiedy: </label>
+                            <input type="date" placeholder="yyyy-mm-dd" id="date" name="custom_start" />
+                            <label for="date"> Do kiedy: </label>
+                            <input type="date" placeholder="yyyy-mm-dd" id="date" name="custom_end" />
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-primary" name="customize_period" value="OK" />
+                            <input type="submit" class="btn btn-secondary" data-dismiss="modal" value="Anuluj" />
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+
+        </form>
+
+        <div class="bilansIncome">
+            <div >
+                <h3 id="wplywy">Wpływy:</h3>
+            </div>
+
+            <table>
+                <tr>
+                    <th>Kwota</th>
+                    <th>Data</th>
+                    <th>Kategoria</th>
+                </tr>
+                {% for bilanceIncome in bilanceIncome %}
+
+                <tr>
+                    <td>{{ bilanceIncome.amount }}</td>
+                    <td>{{ bilanceIncome.date_of_income }}</td>
+                    <td>{{ bilanceIncome.name }}</td>
+                </tr>
+
+                {% endfor %}
+                <tr>
+                    <th>SUMA:</th>
+                    <th>
+                        {{ total_income.sum }} {% if total_income.sum == 0 %}
+                        <span>0</span> {% endif %} PLN
+                    </th>
+                </tr>
+            </table>
         </div>
-      
-    </form> 
-      
-    <div class="bilansIncome">
-      <h3>Wpływy:</h3>
-      <table>
-        <tr>
-          <th>Kwota</th>  <th>Data</th> <th>Kategoria</th>
-        </tr>
-        {% for bilanceIncome in bilanceIncome %}
 
-        <tr>
-          <td>{{ bilanceIncome.amount }}</td>
-          <td>{{ bilanceIncome.date_of_income }}</td>
-          <td>{{ bilanceIncome.name }}</td>
-        </tr>
+        <div class="bilansExpense">
+            <h3>Wydatki:</h3>
+            <table>
+                <tr>
+                    <th>Kwota</th>
+                    <th>Data</th>
+                    <th>Kategoria</th>
+                </tr>
+                {% for bilanceE in bilanceE %}
+                <tr>
+                    <td>{{ bilanceE.amount }}</td>
+                    <td>{{ bilanceE.date_of_expense }}</td>
+                    <td>{{ bilanceE.name }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <th>SUMA:</th>
+                    <th>
+                        {{ total_expense.sum }} {% if total_expense.sum == 0 %}
+                        <span>0</span> {% endif %} PLN
+                    </th>
+                </tr>
+            </table>
+        </div>
 
-        {% endfor %}
-        <tr>
-          <th>SUMA:</th>
-          <th>
-            {{ total_income.sum }} {% if total_income.sum == 0 %}
-            <span>0</span> {% endif %} PLN
-          </th>
-        </tr>
-      </table>
-    </div>
+        <div>
+            {% if total_income.sum > 0 %}
 
-    <div class="bilansExpense">
-      <h3>Wydatki:</h3>
-      <table>
-        <tr>
-          <th>Kwota</th> <th>Data</th> <th>Kategoria</th>
-        </tr>
-        {% for bilanceE in bilanceE %}
-        <tr>
-          <td>{{ bilanceE.amount }}</td>
-          <td>{{ bilanceE.date_of_expense }}</td>
-          <td>{{ bilanceE.name }}</td>
-        </tr>
-        {% endfor %}
-        <tr>
-          <th>SUMA:</th>
-          <th>
-            {{ total_expense.sum }} {% if total_expense.sum == 0 %}
-            <span>0</span> {% endif %} PLN
-          </th>
-        </tr>
-      </table>
-    </div>
-   
-    <div>
-      {% if total_income.sum > 0 %}
+            <div id="chartIncomesContainer" style="width:100%; height:280px; margin-bottom: 20px; margin-top: 20px;"></div>
 
-      <div id="chartIncomesContainer" style="width:40%%; height:280px; margin-bottom: 20px; margin-top: 20px;"></div>
-      
-     {% endif %}
+            {% endif %} {% if total_income.sum > 0 %}
 
-     {% if total_income.sum > 0 %}
+            <div id="chartExpensesContainer" style="width:100%; height:280px; margin-bottom: 20px; margin-top: 20px;"></div>
 
-      <div id="chartExpensesContainer" style="width:100%; height:280px; margin-bottom: 20px; margin-top: 20px;"></div>
-      
-      {% endif %}
-    </div>
+            {% endif %}
+        </div>
 
-   
-        
-   
-  
-  </section>
+
+
+
+
+    </section>
 </main>
 
-  {% block footer %} 
-  {{ parent() }} 
-  
-  {% endblock %} 
+{% block footer %} {{ parent() }} {% endblock %}
 
-  <script>
-  
-    window.onload = function() 
-    {
-      var chart_with_incomes = new CanvasJS.Chart("chartIncomesContainer", 
-        {
-          animationEnabled: true,
+<script>
+    window.onload = function() {
+        
+        $('#current_month').click(
+            function() {
+                $("#wplywy" > h3).html("Wpływy - Obecny miesiąc");
+            }
+        )
+        $('#previous_month' > h3).click(
+            function() {
+                $("#wplywy").html("Wpływy - Poprzedni miesiąc");
+            }
+        )
+        $('#current_year' > h3).click(
+            function() {
+                $("#wplywy").html("Wpływy - Obecny rok");
+            }
+        )
 
-          title: 
-          {
-            text: "Podsumowanie wpływów:"
-          },
-          data: [
-          {
-            type: "pie",
-            startAngle: 270,
-            yValueFormatString: "##0.00\"\"",
-            indexLabel: "{label} {y}",
-            indexLabelFontSize: 18,
-            dataPoints: 
-            [
-              {% for value in incomes_by_categories %}
-                { label: {{ value.name|json_encode()|raw }}, y: {{ value.sum|json_encode()|raw }} },
-              {% endfor %}
-            ]
-          }]
+        var chart_with_incomes = new CanvasJS.Chart("chartIncomesContainer", {
+            animationEnabled: true,
+
+            title: {
+                text: "Podsumowanie wpływów:"
+            },
+            data: [{
+                type: "pie",
+                startAngle: 270,
+                yValueFormatString: "##0.00\"\"",
+                indexLabel: "{label} {y}",
+                indexLabelFontSize: 18,
+                dataPoints: [
+                    { % for value in incomes_by_categories %} 
+                {
+                    label: {
+                        {
+                            value.name | json_encode() | raw
+                        }
+                    },
+                    y: {
+                        {
+                            value.sum | json_encode() | raw
+                        }
+                    }
+                }, 
+                { % endfor %}]
+            }]
         });
-  
-      chart_with_incomes.render();
-      
-      var chart_with_expenses = new CanvasJS.Chart("chartExpensesContainer", 
-        {
-          animationEnabled: true,
-          title: 
-          {
-            text: "Podsumowanie wydatków"
-          },
-          data: [
-          {
-            type: "pie",
-            startAngle: 270,
-            yValueFormatString: "##0.00\"\"",
-            indexLabel: "{label} {y}",
-            indexLabelFontSize: 18,
-            dataPoints: 
-            [
-               {% for value in expenses_by_categories %}
-                { label: {{ value.name|json_encode()|raw }}, y: {{ value.sum|json_encode()|raw }} },
-              {% endfor %}
-            ]
-          }]
+
+        chart_with_incomes.render();
+
+        var chart_with_expenses = new CanvasJS.Chart("chartExpensesContainer", {
+            animationEnabled: true,
+            title: {
+                text: "Podsumowanie wydatków"
+            },
+            data: [{
+                type: "pie",
+                startAngle: 270,
+                yValueFormatString: "##0.00\"\"",
+                indexLabel: "{label} {y}",
+                indexLabelFontSize: 18,
+                dataPoints: [{ %
+                    for value in expenses_by_categories %
+                } {
+                    label: {
+                        {
+                            value.name | json_encode() | raw
+                        }
+                    },
+                    y: {
+                        {
+                            value.sum | json_encode() | raw
+                        }
+                    }
+                }, { % endfor %
+                }]
+            }]
         });
-  
-      chart_with_expenses.render();
+
+        chart_with_expenses.render();
     }
-
-    </script>
+</script>
 {% endblock %}

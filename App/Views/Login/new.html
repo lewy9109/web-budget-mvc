@@ -31,6 +31,15 @@
                         
                            <div class ="icon-key">Hasło</div> 
                             <input type="password" name="password" placeholder="hasło.." />
+                            
+                            {% if flash_message is not empty %}
+                                {% for messages in flash_message %}
+                                <div style="color: red;"> 
+                                {{ messages }}
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                            
                         
                             <input type="submit" value="Zaloguj">
                         </form>

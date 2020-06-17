@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Auth;
 use Core\View;
 use App\Models\User;
-use APP\Flash;
+use App\Flash;
 
 /**
  * Login controller
@@ -20,7 +20,6 @@ class Login extends \Core\Controller
      */
     public function newAction()
     {
-
         View::renderTemplate('Login/new.html');
     }
 
@@ -33,14 +32,14 @@ class Login extends \Core\Controller
 
             Auth::login($user);
 
-            //Flash::addMessage('Zalogowano !');
             $this->redirect(Auth::getReturnToPage());
 
             
         }else{
-            Flash::addMessage('Nieudane logowanie, spróbuj jeszcze raz');
+
+            Flash::addMessage('Niepoprawny login lub hasło');
+
             View::renderTemplate('Login/new.html', ['login' => $_POST['login']]);
-           
         }
         
     }

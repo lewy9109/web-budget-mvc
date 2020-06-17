@@ -8,6 +8,9 @@ body{
     font-family: 'Open Sans', sans-serif;
     background-color: rgb(242, 242, 242);
 }
+a {
+    text-decoration: none;
+}
 a:link {
     text-decoration: none;
 }
@@ -199,6 +202,89 @@ tr:hover
     border: 2px solid #ddd;
     border-radius: 10px;
 }
+/* Settings */
+.category_menu
+{
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgb(60, 105, 121); 
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+.category_menu:hover
+{
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #008CBA; 
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.categoryName{
+    display: inline-flex;
+}
+
+.incomeCat{
+    background-color: rgb(233, 76, 76);
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #008CBA; 
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: left;
+    text-decoration: none;
+    display: inline-flex;
+    justify-content: space-between;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 10px;
+}
+/*
+.incomeCatedit{
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+*/
+
+.incomeCat:hover{
+    background-color: rgb(15, 178, 233);
+}
+
+.icon-user-1:hover{
+    cursor: pointer;
+    border: none;
+}
+.btn{
+    background-color: #008CBA; 
+    border: none;
+}
+.btn:hover{
+    background-color: #008CBA; 
+    border: none;
+}
 
   /*nie dziala ??? */
 .lbutton {
@@ -245,6 +331,9 @@ footer {
     padding: 5px 10px;
     margin: 0;
 }
+
+
+
 /* RWD */
 
 @media (max-width: 800px) {

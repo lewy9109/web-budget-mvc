@@ -85,10 +85,7 @@ abstract class Controller
     {
         if(! Auth::getUser())    
         {
-            
-
             Auth::rememberRequestedPage();  
-            
             $this->redirect('/login');
         }
     }

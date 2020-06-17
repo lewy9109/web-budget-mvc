@@ -21,9 +21,9 @@ class Flash
     {
         if(isset($_SESSION['flash_nottifications']))
         {
-            $message = $_SESSION['flash_nottifications'];
+            $messages = $_SESSION['flash_nottifications'];
             unset($_SESSION['flash_nottifications']);
-            return $message;
+            return $messages;
         }
     }
 }

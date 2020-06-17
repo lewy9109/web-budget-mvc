@@ -46,7 +46,6 @@ class View
         if ($twig === null) {
             $loader = new \Twig_Loader_Filesystem(dirname(__DIR__) . '/App/Views');
             $twig = new \Twig_Environment($loader);
-            $twig->addGlobal('session', $_SESSION);
             $twig->addGlobal('current_user', \App\Auth::getUser());
             $twig->addGlobal('flash_message', \App\Flash::getMessage());
             $twig->addGlobal('total_income', \App\TotalIncome::getTotalUserIncome());

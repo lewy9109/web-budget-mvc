@@ -16,13 +16,8 @@ class IncomesByCategories
   {
       if(isset($_SESSION['user_id']))
       {
-        
         return BilansManager::getIncomesGroupedByCategories();
       }
 		 
   }
-//	public static function getSingleIncomesFromCategory()
-   // {
-	//	return BilanceManager::getSingleIncomesFromCategory();
- //  }
 }

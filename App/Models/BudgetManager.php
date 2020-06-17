@@ -229,5 +229,56 @@ class BudgetManager extends \Core\Model
         return $date_formated;
     }
 
+    public static function getIncomesCategory()
+    {
+        
+        $user_id = $_SESSION['user_id'];
+		
+		$sql = "SELECT name FROM incomes_category_assigned_to_users WHERE user_id = '$user_id'";
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        //$stmt->bindValue(':id', $user_id, PDO::PARAM_INT);
+		
+        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+
+        $stmt->execute();
+        
+		while($row =  $stmt->fetch())
+        {
+            
+            echo "<div class = 'incomeCat'>";
+
+                echo "<div class='categoryName' id='$row->name'>";
+                   // echo "<input type='checkbox' id='$row->name' name='$row->name' value='$row->name'>";
+                   // echo "<label for='$row->name' style='margin-left: 10px; letter-spacing: 3px;'>$row->name</label>";
+                    echo $row->name;
+                echo "</div>";
+
+                echo "<div>";
+                    echo "<button type='button' class='btn btn-primary edit' data-toggle='modal' data-target='#exampleModal' id='$row->name' value='$row->name'>
+                    <div class ='icon-pencil'>Edytuj</div>
+                    </button>";
+
+                    echo "<button type='button' class='btn btn-primary delete' style='background-color: rgb(233, 76, 76); ' data-toggle='modal' data-target='#exampleModal2'>
+                    <div class ='icon-minus-1'>Usuń</div>
+                </button>";
+                echo "</div>";
+
+            echo "</div>";
+        }
+        /*
+        echo "<div class = 'incomeCatedit'>";
+            echo "<button type='button' class='btn btn-primary edit' data-toggle='modal' data-target='#exampleModal' style='width: 50%'>
+            <div class ='icon-pencil'>Edytuj</div>
+            </button>";
+
+            echo "<button type='button' class='btn btn-primary delete' style='background-color: rgb(233, 76, 76); width: 50%;' data-toggle='modal' data-target='#exampleModal2'>
+            <div class ='icon-minus-1'>Usuń</div>
+            </button>";
+        echo "</div>";
+       */
+    }
+
 
 }

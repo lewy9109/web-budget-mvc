@@ -13,8 +13,7 @@ class BilansManager extends \Core\Model
      * @var array
      */
     public $errors = [];
-    public $income = [];
-
+   
         /**
      * Class constructor
      *
@@ -30,13 +29,14 @@ class BilansManager extends \Core\Model
         };
     }
 
+
     public static function showIncome()
     {
         if(isset($_SESSION['user_id']))
         {
             $userid = $_SESSION['user_id'];
         }
-        $sql = "SELECT i.amount, i.date_of_income, ia.name
+        $sql = "SELECT i.*, ia.*
         FROM incomes AS i, incomes_category_assigned_to_users AS ia
         WHERE i.user_id = :id AND i.income_category_assigned_to_user_id = ia.id";
         $db = static::getDB();
@@ -57,7 +57,7 @@ class BilansManager extends \Core\Model
         {
             $userid = $_SESSION['user_id'];
         }
-        $sql = "SELECT i.amount, i.date_of_expense, ia.name
+        $sql = "SELECT i.*, ia.*
         FROM expenses AS i, expenses_category_assigned_to_users AS ia
         WHERE i.user_id = :id AND i.expense_category_assigned_to_user_id = ia.id";
         $db = static::getDB();
